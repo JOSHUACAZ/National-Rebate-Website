@@ -1,0 +1,5 @@
+{
+  "version": "2026.08.21.network.2",
+  "released": "2026-08-21",
+  "notes": "Adds predictive model autocomplete with network/date-aware suggestions, keyboard navigation, and duplicate protection"
+}
