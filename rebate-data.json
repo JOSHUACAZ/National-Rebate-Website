@@ -1,10 +1,10 @@
 {
   "siteName": "Appliance Rebate Tracker",
-  "dataVersion": "2026-08-21-network-selector-v1",
+  "dataVersion": "2026-08-26-network-commercial-laundry-extension-v2",
   "programs": [
     {
       "id": "cafe",
-      "name": "Caf\u00e9 Express Yourself \u2014 National",
+      "name": "Café Express Yourself — National",
       "validDates": "July 1, 2026 - December 31, 2026",
       "color": "#8b5e3c",
       "models": [
@@ -955,15 +955,15 @@
     },
     {
       "id": "nmg-cafe-2026-h2",
-      "name": "Nationwide Caf\u00e9 Combined Savings",
-      "brand": "Caf\u00e9 / Nationwide",
+      "name": "Nationwide Café Combined Savings",
+      "brand": "Café / Nationwide",
       "audiences": [
         "nationwide"
       ],
       "color": "#006b57",
       "startDate": "2026-07-09",
       "endDate": "2026-12-31",
-      "validDates": "Jul 9\u2013Dec 31, 2026",
+      "validDates": "Jul 9–Dec 31, 2026",
       "pdf": "rebates/nmg-cafe-combined-2026-h2.pdf",
       "calculator": "nmgCafeCombined",
       "models": [
@@ -2098,15 +2098,15 @@
         "twoPieceDishwasherExclusion": true
       },
       "notes": [
-        "Replaces the Caf\u00e9 National rebate for Nationwide/NMG users; the two cannot be combined.",
-        "Includes model-specific savings plus the Caf\u00e9 package bonus on one form.",
+        "Replaces the Café National rebate for Nationwide/NMG users; the two cannot be combined.",
+        "Includes model-specific savings plus the Café package bonus on one form.",
         "Limit one model per product category; maximum eight models per claim.",
         "Dishwashers do not qualify as a choice in a 2-piece package."
       ]
     },
     {
       "id": "profile",
-      "name": "GE Profile Innovation \u2014 National",
+      "name": "GE Profile Innovation — National",
       "validDates": "July 1, 2026 - December 31, 2026",
       "color": "#375a7f",
       "models": [
@@ -2979,7 +2979,7 @@
       "color": "#5d38a8",
       "startDate": "2026-07-09",
       "endDate": "2026-09-30",
-      "validDates": "Jul 9\u2013Sep 30, 2026",
+      "validDates": "Jul 9–Sep 30, 2026",
       "pdf": "rebates/profile-laundry-pedestal-2026.pdf",
       "calculator": "profileLaundryPedestal",
       "models": [
@@ -3145,14 +3145,14 @@
       },
       "notes": [
         "Requires the eligible matching riser or pedestal model to be entered with the qualifying Combo or front-load pair.",
-        "Payout varies from $200\u2013$300 based on the selected riser/pedestal.",
+        "Payout varies from $200–$300 based on the selected riser/pedestal.",
         "This rebate states it cannot be combined with any other GE Appliances rebate or promotion, so it is treated as an alternative rather than added on top of other rebates."
       ]
     },
     {
       "id": "commercial",
       "name": "BrandSource GE Commercial Laundry Pair",
-      "validDates": "July 1, 2026 - September 1, 2026",
+      "validDates": "July 1, 2026 - September 30, 2026",
       "color": "#28785c",
       "models": [
         {
@@ -3183,10 +3183,11 @@
       },
       "notes": [
         "$150 requires GTW525ACWWB plus one qualifying dryer.",
-        "Limit one rebate per household."
+        "Limit one rebate per code/household and one appliance per category.",
+        "Claims must be submitted by October 31, 2026."
       ],
       "startDate": "2026-07-01",
-      "endDate": "2026-09-01",
+      "endDate": "2026-09-30",
       "pdf": "rebates/ge-commercial-laundry-q3-2026.pdf",
       "audiences": [
         "brandsource"
@@ -3202,7 +3203,7 @@
       "color": "#0869ad",
       "startDate": "2026-07-01",
       "endDate": "2026-12-31",
-      "validDates": "Jul 1\u2013Dec 31, 2026",
+      "validDates": "Jul 1–Dec 31, 2026",
       "pdf": "rebates/nmg-commercial-laundry-2026-h2.pdf",
       "calculator": "commercialPairAnyWasher",
       "models": [
@@ -4716,7 +4717,7 @@
       "color": "#005c9f",
       "startDate": "2026-08-27",
       "endDate": "2026-09-16",
-      "validDates": "Aug 27\u2013Sep 16, 2026",
+      "validDates": "Aug 27–Sep 16, 2026",
       "pdf": "rebates/nmg-labor-day-2026.pdf",
       "calculator": "nmgLaborDay",
       "models": [

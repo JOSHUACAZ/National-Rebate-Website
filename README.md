@@ -24,3 +24,8 @@ Upload everything in this folder to the root of a separate GitHub repository. Ke
 - Arrow Up/Down changes selection; Enter inserts; Escape closes.
 - Clicking a suggestion inserts it into the package.
 - Models already entered are suppressed from suggestions to reduce duplicates.
+
+## Update 2026-08-26
+- BrandSource GE Commercial Laundry Pair rebate extended through September 30, 2026.
+- Official GEQ3COMLAU26 printable form replaced with version 8.19.26.
+- Nationwide/NMG commercial laundry program and all other calculator behavior remain unchanged.
