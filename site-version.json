@@ -1,5 +1,5 @@
 {
-  "version": "2026.08.26.network.3",
+  "version": "2026.08.26.network.4",
   "released": "2026-08-26",
-  "notes": "Extends the BrandSource GE Commercial Laundry $150 pair rebate through September 30, 2026 and replaces the official printable form; all other network logic and features unchanged."
+  "notes": "Adds Google Analytics 4 anonymous usage tracking with Measurement ID G-YZNSEDDBPM. Appliance model numbers remain browser-local and are not sent to analytics. All rebate and network logic unchanged."
 }

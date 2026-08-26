@@ -29,3 +29,7 @@ Upload everything in this folder to the root of a separate GitHub repository. Ke
 - BrandSource GE Commercial Laundry Pair rebate extended through September 30, 2026.
 - Official GEQ3COMLAU26 printable form replaced with version 8.19.26.
 - Nationwide/NMG commercial laundry program and all other calculator behavior remain unchanged.
+
+
+## Google Analytics 4
+Measurement ID: `G-YZNSEDDBPM`. Tracks page traffic, dealer-network selection, rebate checks, package size, qualifying rebate count/programs, compatible calculated rebate total, and print actions. Appliance model numbers are not transmitted to analytics.
