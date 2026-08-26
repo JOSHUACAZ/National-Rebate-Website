@@ -1,5 +1,5 @@
 {
-  "version": "2026.08.26.network.4",
+  "version": "2026.08.26.network.5",
   "released": "2026-08-26",
-  "notes": "Adds Google Analytics 4 anonymous usage tracking with Measurement ID G-YZNSEDDBPM. Appliance model numbers remain browser-local and are not sent to analytics. All rebate and network logic unchanged."
+  "notes": "Print reliability fix for National Rebate Website. Single eligible forms open directly; multi-form packets retry PDF merging with a fallback CDN and provide direct eligible-form links if browser/network restrictions prevent merging. Rebate logic and GA4 tracking unchanged."
 }

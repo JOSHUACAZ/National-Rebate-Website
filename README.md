@@ -33,3 +33,7 @@ Upload everything in this folder to the root of a separate GitHub repository. Ke
 
 ## Google Analytics 4
 Measurement ID: `G-YZNSEDDBPM`. Tracks page traffic, dealer-network selection, rebate checks, package size, qualifying rebate count/programs, compatible calculated rebate total, and print actions. Appliance model numbers are not transmitted to analytics.
+
+
+## Print reliability update
+This build improves Print Eligible Rebate Forms without changing rebate calculations. One qualifying form opens directly. Multiple qualifying forms are merged when the browser can load pdf-lib; if the primary CDN is unavailable the app retries from a second CDN. If merging is blocked, a fallback page provides direct links to every qualifying official form.
