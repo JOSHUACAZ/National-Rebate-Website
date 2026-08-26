@@ -37,3 +37,7 @@ Measurement ID: `G-YZNSEDDBPM`. Tracks page traffic, dealer-network selection, r
 
 ## Print reliability update
 This build improves Print Eligible Rebate Forms without changing rebate calculations. One qualifying form opens directly. Multiple qualifying forms are merged when the browser can load pdf-lib; if the primary CDN is unavailable the app retries from a second CDN. If merging is blocked, a fallback page provides direct links to every qualifying official form.
+
+
+## Print fix v3
+Single-form printing now resolves the eligible rebate PDF to an absolute URL based on the live GitHub Pages site before navigating the print tab. This corrects the single-rebate case while leaving multi-form packet merging unchanged.

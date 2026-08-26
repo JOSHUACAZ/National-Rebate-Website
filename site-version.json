@@ -1,5 +1,5 @@
 {
-  "version": "2026.08.26.network.5",
+  "version": "2026.08.26-national-print-fix-v3",
   "released": "2026-08-26",
-  "notes": "Print reliability fix for National Rebate Website. Single eligible forms open directly; multi-form packets retry PDF merging with a fallback CDN and provide direct eligible-form links if browser/network restrictions prevent merging. Rebate logic and GA4 tracking unchanged."
+  "notes": "Fixes single eligible rebate form printing by resolving its PDF path against the live site URL. Multi-form packet behavior, rebate logic, predictive search, and GA4 tracking are unchanged."
 }
