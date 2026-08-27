@@ -1,4 +1,4 @@
-const APP_BUILD_VERSION = '2026.08.26.network.5';
+const APP_BUILD_VERSION = '2026.08.26-national-print-recode-v4';
 async function checkForSiteUpdate(){try{const r=await fetch(`site-version.json?t=${Date.now()}`,{cache:'no-store'});if(!r.ok)return;const remote=await r.json();if(remote.version&&remote.version!==APP_BUILD_VERSION){const u=new URL(location.href);u.searchParams.set('build',remote.version);location.replace(u.toString())}}catch(e){}}
 checkForSiteUpdate();window.addEventListener('focus',checkForSiteUpdate);document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkForSiteUpdate()});setInterval(checkForSiteUpdate,5*60*1000);
 const rebateData=window.REBATE_DATA;const money=n=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(n||0);const norm=s=>s.toUpperCase().replace(/[^A-Z0-9]/g,'');const $=id=>document.getElementById(id);const modelsInput=$('modelsInput');let selectedNetwork=localStorage.getItem('applianceRebateNetwork')||'';let lastResults={},lastActivePrograms=[];let autocompleteItems=[],autocompleteIndex=-1;
