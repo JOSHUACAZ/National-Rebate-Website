@@ -76,10 +76,53 @@ function compatibleTotal(programs,results){let regular=0,exclusive=[];programs.f
 function render(models){if(!rebateData||!selectedNetwork)return;const programs=activePrograms();lastActivePrograms=programs;let results={};programs.forEach(p=>results[p.id]=calculateProgram(models,p));lastResults=results;const t=compatibleTotal(programs,results);$('totalSavings').textContent=money(t.total);$('totalNote').textContent=t.note;$('modelCount').textContent=models.length+' models entered';$('asOfDate').textContent='Active rebates as of '+new Date(todayLocalISO()+'T12:00:00').toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});const printable=programs.filter(p=>results[p.id]?.amount>0&&p.pdf);$('printFormsBtn').disabled=!printable.length;$('printFormsBtn').textContent=printable.length?`Print Eligible Rebate Forms (${printable.length})`:'Print Eligible Rebate Forms';$('summaryCards').innerHTML=programs.map(p=>{let r=results[p.id];return`<article class="summary-card" style="--accent:${p.color}"><div class="top"><div><h4>${p.name}</h4><span class="sub">${p.validDates}</span></div><div class="amount">${money(r.amount)}</div></div><div class="metrics"><div class="metric"><strong>${r.count}</strong><span>ELIGIBLE / COUNTED</span></div><div class="metric"><strong>${r.status}</strong><span>STATUS</span></div></div>${r.amount>0&&p.pdf?`<a class="form-link" href="${p.pdf}" target="_blank" rel="noopener">View official rebate form</a>`:''}${p.rules?.exclusive&&r.amount?'<div class="exclusive-note">Exclusive alternative — not added on top of other GE Appliances rebates.</div>':''}${r.extra.length?`<div class="pill yes">${r.extra.join(' • ')}</div>`:''}<ul>${p.notes.map(n=>`<li>${n}</li>`).join('')}</ul></article>`}).join('')||'<div class="unknown"><strong>No rebate programs are active for this network today.</strong></div>';let known=new Set(programs.flatMap(p=>p.models.map(x=>x.model))),unknown=[...new Set(models.filter(m=>!known.has(m)))],ub=$('unknownBox');if(unknown.length){ub.classList.remove('hidden');ub.innerHTML=`<strong>Not found in any active ${selectedNetwork==='brandsource'?'BrandSource':'Nationwide/NMG'} rebate:</strong><br>${unknown.join(', ')}`}else ub.classList.add('hidden');$('detailHead').innerHTML='<tr><th>Model</th>'+programs.map(p=>`<th>${shortName(p)}</th>`).join('')+'</tr>';if(!models.length){$('detailBody').innerHTML=`<tr><td colspan="${programs.length+1}" class="empty">Enter models to begin.</td></tr>`;return}$('detailBody').innerHTML=models.map((m,i)=>`<tr><td class="model">${m}</td>${programs.map(p=>{let r=results[p.id],x=r.matches[i];if(!x)return'<td><span class="pill no">Not listed</span></td>';let counted=r.counts[i];let msg=counted?(x.countValue>1?`Eligible / counts as ${x.countValue}`:'Eligible / counted'):'Listed / requirement or limit not met';return`<td><span class="pill ${counted?'yes':'limited'}">${msg}</span><span class="sub">${x.category}${x.value?' · '+money(x.value):''}</span></td>`}).join('')}</tr>`).join('')}
 function shortName(p){const map={'cafe':'Café National','nmg-cafe-2026-h2':'NMG Café','profile':'Profile','profile-laundry-pedestal-2026':'Profile Laundry','commercial':'BS Commercial Laundry','nmg-commercial-2026-h2':'NMG Commercial Laundry','monogram':'Monogram D&I','labor-day-2026':'BS Labor Day','nmg-labor-day-2026':'NMG Labor Day'};return map[p.id]||p.name}
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function printFallbackHtml(eligible,message){const links=eligible.map((p,i)=>`<li><a href="${p.pdf}" target="_blank" rel="noopener">${escapeHtml(p.name)}</a></li>`).join('');return `<!doctype html><title>Eligible rebate forms</title><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{font-family:Arial,sans-serif;padding:32px;color:#233;background:#f6f8fb}.box{max-width:720px;margin:auto;background:white;padding:28px;border-radius:14px;box-shadow:0 8px 30px #0001}a{color:#075aa8;font-weight:700}li{margin:14px 0}.note{background:#fff7df;padding:14px;border-radius:10px;margin:16px 0}</style><div class="box"><h2>Eligible rebate forms</h2><div class="note">${escapeHtml(message)}</div><p>Open each qualifying form below, then use the PDF viewer's Print button or Ctrl+P.</p><ol>${links}</ol></div>`}
+function printFallbackHtml(eligible,message){const links=eligible.map((p,i)=>{const href=new URL(p.pdf,window.location.href).href;return `<li><a href="${href}" target="_blank" rel="noopener">${escapeHtml(p.name)}</a></li>`}).join('');return `<!doctype html><title>Eligible rebate forms</title><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{font-family:Arial,sans-serif;padding:32px;color:#233;background:#f6f8fb}.box{max-width:720px;margin:auto;background:white;padding:28px;border-radius:14px;box-shadow:0 8px 30px #0001}a{color:#075aa8;font-weight:700}li{margin:14px 0}.note{background:#fff7df;padding:14px;border-radius:10px;margin:16px 0}</style><div class="box"><h2>Eligible rebate forms</h2><div class="note">${escapeHtml(message)}</div><p>Open each qualifying form below, then use the PDF viewer's Print button or Ctrl+P.</p><ol>${links}</ol></div>`}
 function loadPdfLibFallback(){return new Promise(resolve=>{if(window.PDFLib)return resolve(true);const existing=document.querySelector('script[data-pdf-lib-fallback]');if(existing){existing.addEventListener('load',()=>resolve(!!window.PDFLib),{once:true});existing.addEventListener('error',()=>resolve(false),{once:true});return}const s=document.createElement('script');s.src='https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js';s.defer=true;s.dataset.pdfLibFallback='1';s.onload=()=>resolve(!!window.PDFLib);s.onerror=()=>resolve(false);document.head.appendChild(s);setTimeout(()=>resolve(!!window.PDFLib),5000)})}
-async function printEligibleForms(){const eligible=lastActivePrograms.filter(p=>lastResults[p.id]?.amount>0&&p.pdf);if(!eligible.length)return;trackEvent('print_eligible_rebate_forms',{...analyticsSnapshot(),forms_count:eligible.length});const popup=window.open('','_blank');if(!popup){alert('Please allow pop-ups for this site so the eligible rebate form(s) can open.');return}
-if(eligible.length===1){const formUrl=new URL(eligible[0].pdf,window.location.href).href;popup.location.replace(formUrl);return}
-popup.document.write('<!doctype html><title>Preparing rebate forms...</title><style>body{font-family:Arial;padding:32px;color:#233}.box{max-width:620px;margin:auto}progress{width:100%}</style><div class="box"><h2>Preparing eligible rebate forms…</h2><p>Combining '+eligible.length+' official rebate form(s).</p><progress></progress><p>This can take a few seconds.</p></div>');
-try{if(!window.PDFLib){const loaded=await loadPdfLibFallback();if(!loaded)throw new Error('The PDF packet library was blocked by the browser or network.')}const merged=await PDFLib.PDFDocument.create();for(const p of eligible){const res=await fetch(p.pdf,{cache:'no-store'});if(!res.ok)throw new Error(`Could not load ${p.name} form.`);const src=await PDFLib.PDFDocument.load(await res.arrayBuffer(),{ignoreEncryption:true});const pages=await merged.copyPages(src,src.getPageIndices());pages.forEach(pg=>merged.addPage(pg))}const blob=new Blob([await merged.save()],{type:'application/pdf'}),url=URL.createObjectURL(blob);popup.location.replace(url);setTimeout(()=>URL.revokeObjectURL(url),10*60*1000)}catch(err){popup.document.open();popup.document.write(printFallbackHtml(eligible,'A combined PDF packet could not be created on this browser/network. Your eligible forms are still available below.'));popup.document.close()}}
+async function printEligibleForms(){
+  const eligible=lastActivePrograms.filter(p=>lastResults[p.id]?.amount>0&&p.pdf);
+  if(!eligible.length)return;
+  trackEvent('print_eligible_rebate_forms',{...analyticsSnapshot(),forms_count:eligible.length});
+
+  // Use the exact same print path for one form or many forms. Opening the
+  // window synchronously keeps browsers from treating the final PDF as a
+  // delayed popup after the async merge finishes.
+  const popup=window.open('about:blank','_blank');
+  if(!popup){
+    alert('Please allow pop-ups for this site so the eligible rebate form(s) can open.');
+    return;
+  }
+  popup.document.open();
+  popup.document.write('<!doctype html><title>Preparing rebate forms...</title><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{font-family:Arial,sans-serif;padding:32px;color:#233;background:#f6f8fb}.box{max-width:620px;margin:auto;background:#fff;padding:28px;border-radius:14px;box-shadow:0 8px 30px #0001}progress{width:100%}</style><div class="box"><h2>Preparing eligible rebate form'+(eligible.length===1?'':'s')+'…</h2><p>Preparing '+eligible.length+' official rebate form'+(eligible.length===1?'':'s')+'.</p><progress></progress><p>This can take a few seconds.</p></div>');
+  popup.document.close();
+
+  try{
+    if(!window.PDFLib){
+      const loaded=await loadPdfLibFallback();
+      if(!loaded)throw new Error('The PDF packet library was blocked by the browser or network.');
+    }
+
+    const merged=await PDFLib.PDFDocument.create();
+    for(const p of eligible){
+      // Resolve every form against the actual site URL before fetching. This
+      // prevents blank-tab/relative-path behavior from affecting one-form jobs.
+      const formUrl=new URL(p.pdf,window.location.href).href;
+      const res=await fetch(formUrl,{cache:'no-store'});
+      if(!res.ok)throw new Error(`Could not load ${p.name} form.`);
+      const src=await PDFLib.PDFDocument.load(await res.arrayBuffer(),{ignoreEncryption:true});
+      const pages=await merged.copyPages(src,src.getPageIndices());
+      pages.forEach(pg=>merged.addPage(pg));
+    }
+
+    const bytes=await merged.save();
+    const blob=new Blob([bytes],{type:'application/pdf'});
+    const url=URL.createObjectURL(blob);
+    popup.location.replace(url);
+    setTimeout(()=>URL.revokeObjectURL(url),10*60*1000);
+  }catch(err){
+    console.error('Eligible rebate print failed:',err);
+    popup.document.open();
+    popup.document.write(printFallbackHtml(eligible,'The PDF packet could not be prepared automatically on this browser/network. Open the eligible form(s) below to print them.'));
+    popup.document.close();
+  }
+}
 if(rebateData){if(selectedNetwork)selectNetwork(selectedNetwork)}else{$('networkCopy').textContent='Rebate data failed to load. Confirm rebate-data.js is uploaded beside index.html.'}

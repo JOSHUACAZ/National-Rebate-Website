@@ -41,3 +41,7 @@ This build improves Print Eligible Rebate Forms without changing rebate calculat
 
 ## Print fix v3
 Single-form printing now resolves the eligible rebate PDF to an absolute URL based on the live GitHub Pages site before navigating the print tab. This corrects the single-rebate case while leaving multi-form packet merging unchanged.
+
+
+## Print pipeline v6
+The eligible-form feature now uses one unified PDF preparation path for both single-form and multi-form packages. This removes the separate single-form navigation branch that caused inconsistent behavior.

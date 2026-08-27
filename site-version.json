@@ -1,5 +1,5 @@
 {
-  "version": "2026.08.26-national-print-fix-v3",
+  "version": "2026.08.26-national-print-recode-v4",
   "released": "2026-08-26",
-  "notes": "Fixes single eligible rebate form printing by resolving its PDF path against the live site URL. Multi-form packet behavior, rebate logic, predictive search, and GA4 tracking are unchanged."
+  "notes": "Rebuilt eligible-form printing so single and multiple rebate forms use the same PDF packet pipeline. Fallback form links now use absolute site URLs. Rebate logic, predictive search, network selection, and GA4 tracking are unchanged."
 }
