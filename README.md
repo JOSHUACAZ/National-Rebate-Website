@@ -49,3 +49,7 @@ The eligible-form feature now uses one unified PDF preparation path for both sin
 
 ## Print compatibility update
 Rebate PDFs were normalized to clean PDF 1.4 structures for browser-side merging. The eligible-form merge routine now reports the exact form name if a PDF cannot be loaded or processed. Build: 2026.08.26.network.8.
+
+
+## v9 print fix
+Restores the missing GA4 helper functions (`trackEvent` and `analyticsSnapshot`) that the National build was calling before the print popup opened. Their absence caused a JavaScript ReferenceError, making the Print Eligible Rebate Forms button appear clickable but do nothing. Build version: 2026.08.26.network.9.
