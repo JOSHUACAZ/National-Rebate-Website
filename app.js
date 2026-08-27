@@ -1,4 +1,4 @@
-const APP_BUILD_VERSION = '2026.08.26.network.7';
+const APP_BUILD_VERSION = '2026.08.26.network.8';
 async function checkForSiteUpdate(){try{const r=await fetch(`site-version.json?t=${Date.now()}`,{cache:'no-store'});if(!r.ok)return;const remote=await r.json();if(remote.version&&remote.version!==APP_BUILD_VERSION){const u=new URL(location.href);u.searchParams.set('build',remote.version);location.replace(u.toString())}}catch(e){}}
 checkForSiteUpdate();window.addEventListener('focus',checkForSiteUpdate);document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkForSiteUpdate()});setInterval(checkForSiteUpdate,5*60*1000);
 const rebateData=window.REBATE_DATA;const money=n=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(n||0);const norm=s=>s.toUpperCase().replace(/[^A-Z0-9]/g,'');const $=id=>document.getElementById(id);const modelsInput=$('modelsInput');let selectedNetwork=localStorage.getItem('applianceRebateNetwork')||'';let lastResults={},lastActivePrograms=[];let autocompleteItems=[],autocompleteIndex=-1;
@@ -85,13 +85,19 @@ async function printEligibleForms(){
   try{
     if(!window.PDFLib) throw new Error('PDF library did not load.');
     const merged=await PDFLib.PDFDocument.create();
+    let currentForm='';
     for(const p of eligible){
+      currentForm=p.name;
       const res=await fetch(p.pdf,{cache:'no-store'});
-      if(!res.ok) throw new Error(`Could not load ${p.name} form.`);
+      if(!res.ok) throw new Error(`Could not load ${p.name} form (HTTP ${res.status}).`);
       const bytes=await res.arrayBuffer();
-      const src=await PDFLib.PDFDocument.load(bytes);
-      const pages=await merged.copyPages(src,src.getPageIndices());
-      pages.forEach(pg=>merged.addPage(pg));
+      try{
+        const src=await PDFLib.PDFDocument.load(bytes,{ignoreEncryption:true});
+        const pages=await merged.copyPages(src,src.getPageIndices());
+        pages.forEach(pg=>merged.addPage(pg));
+      }catch(pdfErr){
+        throw new Error(`Could not process ${currentForm}: ${pdfErr.message||pdfErr}`);
+      }
     }
     const bytes=await merged.save();
     const blob=new Blob([bytes],{type:'application/pdf'});

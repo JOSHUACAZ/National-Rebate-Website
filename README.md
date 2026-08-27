@@ -45,3 +45,7 @@ Single-form printing now resolves the eligible rebate PDF to an absolute URL bas
 
 ## Print pipeline v6
 The eligible-form feature now uses one unified PDF preparation path for both single-form and multi-form packages. This removes the separate single-form navigation branch that caused inconsistent behavior.
+
+
+## Print compatibility update
+Rebate PDFs were normalized to clean PDF 1.4 structures for browser-side merging. The eligible-form merge routine now reports the exact form name if a PDF cannot be loaded or processed. Build: 2026.08.26.network.8.
