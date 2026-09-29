@@ -53,3 +53,27 @@ Rebate PDFs were normalized to clean PDF 1.4 structures for browser-side merging
 
 ## v9 print fix
 Restores the missing GA4 helper functions (`trackEvent` and `analyticsSnapshot`) that the National build was calling before the print popup opened. Their absence caused a JavaScript ReferenceError, making the Print Eligible Rebate Forms button appear clickable but do nothing. Build version: 2026.08.26.network.9.
+
+## 2026-09-29 Q4 Network Update
+
+Build: `2026.09.29.network.q4.1`
+
+- BrandSource path adds Fall Into Savings (10/1-10/21), Q4 Commercial Laundry (10/1-12/31), and retains historical/scheduled BrandSource programs.
+- Nationwide/NMG path adds NMG October Cooking (10/9-10/18).
+- Cafe x Caraway and GE Profile x Caraway are available to both BrandSource and Nationwide/NMG for 10/1-12/31.
+- Cafe x Caraway is a non-cash cookware reward and may combine with other Cafe promotions.
+- GE Profile x Caraway is a non-cash cookware reward and is flagged non-stackable with other GE Appliances rebates/promotions.
+- Print Eligible Rebate Forms includes cash rebates and eligible non-cash Caraway forms.
+- GA4, predictive search, date preview, local browser storage, and the existing print packet flow remain enabled.
+
+## 2026-09-29 Q4 Network Update
+
+Build: `2026.09.29.network.q4.1`
+
+- BrandSource path adds Fall Into Savings (10/1-10/21) and Q4 Commercial Laundry (10/1-12/31).
+- Nationwide/NMG path adds NMG October Cooking (10/9-10/18).
+- Cafe x Caraway and GE Profile x Caraway are available to both BrandSource and Nationwide/NMG for 10/1-12/31.
+- Cafe x Caraway is a non-cash cookware reward and may combine with other Cafe promotions.
+- GE Profile x Caraway is a non-cash cookware reward and is flagged non-stackable with other GE Appliances rebates/promotions.
+- Print Eligible Rebate Forms includes cash rebates and eligible non-cash Caraway forms.
+- GA4, predictive search, date preview, local browser storage, and the existing print packet flow remain enabled.
